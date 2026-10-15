@@ -1,0 +1,6 @@
+{
+  "name": "Cheer Up My Love",
+  "description": "An interactive heartwarming cheer-up website with cute animations, love notes, sweet surprises, and warm hugs to make your girlfriend smile.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
