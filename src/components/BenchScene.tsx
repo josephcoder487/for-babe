@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Sparkles, Heart, RotateCcw, Volume2, VolumeX, ChevronRight } from 'lucide-react';
 import { playSparkleChime, toggleMusicBox } from '../utils/audio';
+import sadBenchImage from '../assets/images/girl_bench_sad_1792085229754.jpg';
+import smilingStandingImage from '../assets/images/girl_smiling_standing_1792085230106.jpg';
 
 interface Particle {
   id: number;
@@ -201,7 +203,7 @@ export const BenchScene: React.FC<BenchSceneProps> = ({
           >
             {/* Sad Bored Girl sitting on bench */}
             <img
-              src="/src/assets/images/girl_bench_sad_1792085229754.jpg"
+              src={sadBenchImage}
               alt="Girl sitting sad and bored on park bench"
               referrerPolicy="no-referrer"
               className={`absolute inset-0 w-full h-full object-cover transition-all duration-700 ${
@@ -213,7 +215,7 @@ export const BenchScene: React.FC<BenchSceneProps> = ({
 
             {/* Smiling standing girl getting up */}
             <img
-              src="/src/assets/images/girl_smiling_standing_1792085230106.jpg"
+              src={smilingStandingImage}
               alt="Girl smiling brightly and standing up with joy"
               referrerPolicy="no-referrer"
               className={`absolute inset-0 w-full h-full object-cover transition-all duration-700 ${
