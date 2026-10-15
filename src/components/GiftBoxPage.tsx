@@ -1,7 +1,24 @@
+
 import React, { useState } from 'react';
-import { Heart, Sparkles, ArrowLeft, Mail, Gift, Volume2, VolumeX, X, ChevronRight } from 'lucide-react';
-import { playCardboardUnfold, playCelebration, playSparkleChime, playBubblePop } from '../utils/audio';
+import {
+  Heart,
+  Sparkles,
+  ArrowLeft,
+  Mail,
+  Gift,
+  Volume2,
+  VolumeX,
+  X,
+  ChevronRight,
+} from 'lucide-react';
+import {
+  playCardboardUnfold,
+  playCelebration,
+  playSparkleChime,
+  playBubblePop,
+} from '../utils/audio';
 import { EternalHeart } from './EternalHeart';
+import giftBoxInterior from '../assets/images/gift_box_interior_1792085939028.jpg';
 
 interface GiftBoxPageProps {
   onBackToBench: () => void;
@@ -16,12 +33,15 @@ export const GiftBoxPage: React.FC<GiftBoxPageProps> = ({
   isMusicPlaying,
   onToggleMusic,
 }) => {
-  // Number of flaps opened (0 to 4)
   const [flapsOpened, setFlapsOpened] = useState<number>(0);
   const [showPopupMessage, setShowPopupMessage] = useState<boolean>(false);
   const [isLetterModalOpen, setIsLetterModalOpen] = useState<boolean>(false);
-  const [activeLetterTab, setActiveLetterTab] = useState<'main' | 'heart' | 'reasons' | 'vouchers' | 'gifts'>('main');
-  const [unwrappedGifts, setUnwrappedGifts] = useState<{ [key: string]: boolean }>({});
+  const [activeLetterTab, setActiveLetterTab] = useState<
+    'main' | 'heart' | 'reasons' | 'vouchers' | 'gifts'
+  >('main');
+  const [unwrappedGifts, setUnwrappedGifts] = useState<{
+    [key: string]: boolean;
+  }>({});
 
   const isBoxFullyOpened = flapsOpened >= 4;
 
@@ -33,7 +53,6 @@ export const GiftBoxPage: React.FC<GiftBoxPageProps> = ({
       if (nextCount < 4) {
         playCardboardUnfold();
       } else {
-        // 4th click: Box is fully open!
         playCardboardUnfold();
         setTimeout(() => {
           playCelebration();
@@ -42,7 +61,6 @@ export const GiftBoxPage: React.FC<GiftBoxPageProps> = ({
         }, 350);
       }
     } else {
-      // If already open, open the letters
       playSparkleChime();
       setIsLetterModalOpen(true);
     }
@@ -64,10 +82,18 @@ export const GiftBoxPage: React.FC<GiftBoxPageProps> = ({
     <div className="relative min-h-screen w-full bg-gradient-to-b from-[#fbf4ee] via-[#f7e9df] to-[#f3dfd2] text-[#4a352c] flex flex-col items-center justify-between p-4 sm:p-6 select-none overflow-x-hidden font-['Nunito',sans-serif]">
       {/* Background Ambience & Fairy Lights */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-8 left-10 text-2xl animate-pulse opacity-40">✨</div>
-        <div className="absolute top-20 right-14 text-xl animate-bounce opacity-50">🌸</div>
-        <div className="absolute bottom-24 left-16 text-3xl animate-pulse opacity-30">💖</div>
-        <div className="absolute bottom-16 right-20 text-2xl animate-bounce opacity-40">🎀</div>
+        <div className="absolute top-8 left-10 text-2xl animate-pulse opacity-40">
+          ✨
+        </div>
+        <div className="absolute top-20 right-14 text-xl animate-bounce opacity-50">
+          🌸
+        </div>
+        <div className="absolute bottom-24 left-16 text-3xl animate-pulse opacity-30">
+          💖
+        </div>
+        <div className="absolute bottom-16 right-20 text-2xl animate-bounce opacity-40">
+          🎀
+        </div>
         <div className="absolute top-1/2 left-4 w-60 h-60 bg-pink-300/15 rounded-full blur-3xl" />
         <div className="absolute top-1/3 right-4 w-72 h-72 bg-amber-300/15 rounded-full blur-3xl" />
       </div>
@@ -116,16 +142,18 @@ export const GiftBoxPage: React.FC<GiftBoxPageProps> = ({
             <Gift className="w-3.5 h-3.5 text-pink-500" />
             <span>Special Delivery Parcel</span>
           </div>
+
           <h1 className="text-2xl sm:text-3xl font-black text-[#4a352c]">
             A Surprise Package for Ritu ❤️
           </h1>
+
           <p className="text-xs sm:text-sm text-[#8a685e] mt-1 font-semibold">
             {!isBoxFullyOpened
               ? `The box is sealed with 4 cardboard flaps! Tap the box to open each flap (${flapsOpened}/4 opened)`
               : `All 4 flaps are opened! Look at all the gifts Jojo boy packed inside! ✨`}
           </p>
 
-          {/* Progress Indicators (4 dots) */}
+          {/* Progress Indicators */}
           <div className="flex items-center justify-center gap-2.5 mt-3">
             {[1, 2, 3, 4].map((step) => (
               <div
@@ -140,9 +168,8 @@ export const GiftBoxPage: React.FC<GiftBoxPageProps> = ({
           </div>
         </div>
 
-        {/* 3D Top-Down Interactive Cardboard Box Container */}
+        {/* Interactive Cardboard Box */}
         <div className="relative flex items-center justify-center perspective-[1200px]">
-          {/* Cardboard Box Outer Frame */}
           <div
             onClick={handleBoxClick}
             className={`relative w-76 h-76 sm:w-96 sm:h-96 md:w-[420px] md:h-[420px] rounded-3xl cursor-pointer select-none transition-all duration-500 ${
@@ -151,22 +178,20 @@ export const GiftBoxPage: React.FC<GiftBoxPageProps> = ({
                 : 'shadow-2xl shadow-pink-300/40 ring-8 ring-pink-200/80 scale-100'
             }`}
           >
-            {/* Box Interior (Visible through opened flaps or when fully open) */}
+            {/* Gift Box Interior — corrected Vite image import */}
             <div className="absolute inset-0 rounded-2xl overflow-hidden bg-[#ecd1b8] border-4 border-[#b88c63]">
               <img
-                src="/src/assets/images/gift_box_interior_1792085939028.jpg"
+                src={giftBoxInterior}
                 alt="Inside the gift box packed with letters, gifts, teddy bear and fairy lights"
-                referrerPolicy="no-referrer"
                 className="w-full h-full object-cover"
               />
 
-              {/* Shimmer Overlay on Opened Box */}
               {isBoxFullyOpened && (
                 <div className="absolute inset-0 bg-gradient-to-t from-pink-500/10 via-transparent to-amber-300/10 pointer-events-none" />
               )}
             </div>
 
-            {/* FLAP 1: TOP FLAP (Folds Open Upward on 1st click) */}
+            {/* Flap 1 */}
             <div
               className={`absolute top-0 inset-x-0 h-1/2 rounded-t-2xl bg-gradient-to-b from-[#d4a880] to-[#c79970] border-4 border-b-2 border-[#b5885f] shadow-md origin-top transition-all duration-700 ease-out z-20 flex flex-col items-center justify-center p-3 overflow-hidden ${
                 flapsOpened >= 1
@@ -178,10 +203,12 @@ export const GiftBoxPage: React.FC<GiftBoxPageProps> = ({
               <div className="flex items-center gap-1.5 bg-[#b58359]/30 px-3 py-1 rounded-md text-[11px] font-black uppercase text-[#5a361c] tracking-wider border border-[#8d5e36]/40">
                 <span>📦 FLAP 1: CLICK TO OPEN</span>
               </div>
-              <p className="text-[10px] font-bold text-[#683f22] mt-1">Tap here to peel flap 1</p>
+              <p className="text-[10px] font-bold text-[#683f22] mt-1">
+                Tap here to peel flap 1
+              </p>
             </div>
 
-            {/* FLAP 2: RIGHT FLAP (Folds Open Rightward on 2nd click) */}
+            {/* Flap 2 */}
             <div
               className={`absolute top-0 right-0 w-1/2 inset-y-0 rounded-r-2xl bg-gradient-to-l from-[#d4a880] to-[#c79970] border-4 border-l-2 border-[#b5885f] shadow-md origin-right transition-all duration-700 ease-out z-19 flex flex-col items-center justify-center p-3 overflow-hidden ${
                 flapsOpened >= 2
@@ -194,7 +221,7 @@ export const GiftBoxPage: React.FC<GiftBoxPageProps> = ({
               </div>
             </div>
 
-            {/* FLAP 3: BOTTOM FLAP (Folds Open Downward on 3rd click) */}
+            {/* Flap 3 */}
             <div
               className={`absolute bottom-0 inset-x-0 h-1/2 rounded-b-2xl bg-gradient-to-t from-[#d4a880] to-[#c79970] border-4 border-t-2 border-[#b5885f] shadow-md origin-bottom transition-all duration-700 ease-out z-18 flex flex-col items-center justify-center p-3 overflow-hidden ${
                 flapsOpened >= 3
@@ -207,7 +234,7 @@ export const GiftBoxPage: React.FC<GiftBoxPageProps> = ({
               </div>
             </div>
 
-            {/* FLAP 4: LEFT FLAP (Folds Open Leftward on 4th click) */}
+            {/* Flap 4 */}
             <div
               className={`absolute top-0 left-0 w-1/2 inset-y-0 rounded-l-2xl bg-gradient-to-r from-[#d4a880] to-[#c79970] border-4 border-r-2 border-[#b5885f] shadow-md origin-left transition-all duration-700 ease-out z-17 flex flex-col items-center justify-center p-3 overflow-hidden ${
                 flapsOpened >= 4
@@ -220,15 +247,13 @@ export const GiftBoxPage: React.FC<GiftBoxPageProps> = ({
               </div>
             </div>
 
-            {/* Top Packing Tape & Shipping Stamp (Shown when closed) */}
+            {/* Packing Tape and Shipping Stamp */}
             {flapsOpened === 0 && (
               <div className="absolute inset-0 z-30 pointer-events-none flex flex-col items-center justify-center p-4">
-                {/* Vintage Fragile Tape across center */}
                 <div className="w-full h-8 bg-amber-100/90 border-y-2 border-amber-300 shadow-sm rotate-[-8deg] flex items-center justify-center text-[10px] font-black text-amber-900 tracking-widest uppercase">
                   ❤️ CAUTION: PACKED WITH JOJO'S LOVE FOR RITU ❤️
                 </div>
 
-                {/* Shipping Label Badge */}
                 <div className="mt-4 bg-white/95 rounded-xl p-3 shadow-lg border border-stone-200 text-center w-56 rotate-[2deg]">
                   <p className="text-[10px] uppercase font-black text-pink-600 tracking-wider">
                     PRIORITY LOVE AIRMAIL
@@ -248,7 +273,7 @@ export const GiftBoxPage: React.FC<GiftBoxPageProps> = ({
           </div>
         </div>
 
-        {/* POPUP MESSAGE WHEN BOX IS OPENED */}
+        {/* Popup Message When Box Is Opened */}
         {isBoxFullyOpened && (
           <div className="mt-6 w-full max-w-md animate-in zoom-in-95 duration-500 flex flex-col items-center">
             <button
@@ -271,7 +296,9 @@ export const GiftBoxPage: React.FC<GiftBoxPageProps> = ({
               className="mt-3 text-xs font-black text-rose-600 hover:text-rose-700 bg-white/90 hover:bg-white px-5 py-2.5 rounded-full border border-pink-200 shadow-md transition-all transform hover:scale-105 active:scale-95 flex items-center gap-2"
             >
               <Heart className="w-4 h-4 fill-rose-500 text-rose-500 animate-pulse" />
-              <span>Touch & Fill the Eternal Heart (Joseph & Ritu, infinity) ✨</span>
+              <span>
+                Touch &amp; Fill the Eternal Heart (Joseph &amp; Ritu, infinity) ✨
+              </span>
             </button>
 
             <p className="text-center text-xs text-[#8a685e] font-bold mt-2">
@@ -280,7 +307,7 @@ export const GiftBoxPage: React.FC<GiftBoxPageProps> = ({
           </div>
         )}
 
-        {/* Small Flap Guide Button if closed */}
+        {/* Flap Guide */}
         {!isBoxFullyOpened && (
           <div className="mt-4 text-center">
             <button
@@ -292,7 +319,7 @@ export const GiftBoxPage: React.FC<GiftBoxPageProps> = ({
           </div>
         )}
 
-        {/* BUTTON: NEXT AT THE END OF THE SECOND PAGE */}
+        {/* Next Button */}
         <div className="mt-8 flex flex-col items-center">
           <button
             onClick={() => {
@@ -305,17 +332,17 @@ export const GiftBoxPage: React.FC<GiftBoxPageProps> = ({
             <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
           </button>
           <span className="text-[11px] text-[#8a685e] font-bold mt-1.5">
-            (Showcase our funniest photos & final surprise 💕)
+            (Showcase our funniest photos &amp; final surprise 💕)
           </span>
         </div>
       </main>
 
-      {/* Sweet Footer */}
+      {/* Footer */}
       <footer className="relative z-10 w-full max-w-md text-center py-2 text-xs text-[#8a685e] font-semibold">
         <span>From Jojo boy to his sweet girl Ritu ❤️ • Always and forever</span>
       </footer>
 
-      {/* FULLSCREEN POPUP MODAL: LETTERS & GIFTS FROM JOJO BOY */}
+      {/* Letters and Gifts Modal */}
       {isLetterModalOpen && (
         <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
           <div className="bg-[#fffdfa] rounded-3xl w-full max-w-4xl max-h-[92vh] shadow-2xl border-4 border-pink-200 overflow-hidden flex flex-col animate-in zoom-in-95 duration-200 my-auto">
@@ -367,15 +394,14 @@ export const GiftBoxPage: React.FC<GiftBoxPageProps> = ({
               ))}
             </div>
 
-            {/* Modal Content Body */}
+            {/* Modal Content */}
             <div className="p-5 sm:p-6 overflow-y-auto space-y-4 text-[#4a352c] text-sm leading-relaxed">
-              {/* TAB 1: MAIN LETTER WITH ETERNAL HEART NEXT TO IT */}
               {activeLetterTab === 'main' && (
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center font-['Nunito',sans-serif]">
-                  {/* Left Column: The Letter */}
+                  {/* Love Letter */}
                   <div className="lg:col-span-7 space-y-4">
                     <div className="flex items-center justify-between text-xs text-pink-600 font-bold border-b border-pink-100 pb-2">
-                      <span>Date: Today & Forever</span>
+                      <span>Date: Today &amp; Forever</span>
                       <span>To: My Sweetest Ritu ❤️</span>
                     </div>
 
@@ -405,37 +431,35 @@ export const GiftBoxPage: React.FC<GiftBoxPageProps> = ({
                     </div>
                   </div>
 
-                  {/* Right Column: Interactive Heart next to the letter */}
+                  {/* Interactive Heart */}
                   <div className="lg:col-span-5 bg-gradient-to-b from-pink-50/60 to-rose-50/50 rounded-3xl p-4 border-2 border-pink-200/80 shadow-inner flex flex-col items-center justify-center">
                     <EternalHeart />
                   </div>
                 </div>
               )}
 
-              {/* TAB 2: DEDICATED ETERNAL HEART TAB */}
               {activeLetterTab === 'heart' && (
                 <div className="py-2 flex flex-col items-center justify-center">
                   <EternalHeart />
                 </div>
               )}
 
-              {/* TAB 2: REASONS WHY I LOVE YOU */}
               {activeLetterTab === 'reasons' && (
                 <div className="space-y-3">
                   <h3 className="text-sm font-black text-pink-600 uppercase tracking-wider mb-2">
                     Why Ritu ❤️ Means The Entire World To Jojo:
                   </h3>
                   {[
-                    "1. The adorable way your eyes sparkle when you smile.",
-                    "2. How you make even boring ordinary moments feel magical.",
-                    "3. Your pure, caring heart that always thinks of others.",
+                    '1. The adorable way your eyes sparkle when you smile.',
+                    '2. How you make even boring ordinary moments feel magical.',
+                    '3. Your pure, caring heart that always thinks of others.',
                     "4. How cute you look when you're sleepy or cozy in your sweaters.",
                     "5. Your laugh—it's my favorite soundtrack in the whole world.",
                     "6. The comfort of knowing you're in my life.",
-                    "7. How smart, capable, and hardworking you are, even when you doubt yourself.",
-                    "8. The way you make me feel safe, loved, and wanted.",
-                    "9. Your little pouts and facial expressions that melt me instantly.",
-                    "10. Simply because you are Ritu, my girl, my happiness, my home.",
+                    '7. How smart, capable, and hardworking you are, even when you doubt yourself.',
+                    '8. The way you make me feel safe, loved, and wanted.',
+                    '9. Your little pouts and facial expressions that melt me instantly.',
+                    '10. Simply because you are Ritu, my girl, my happiness, my home.',
                   ].map((reason, idx) => (
                     <div
                       key={idx}
@@ -448,16 +472,15 @@ export const GiftBoxPage: React.FC<GiftBoxPageProps> = ({
                 </div>
               )}
 
-              {/* TAB 3: COUPLE VOUCHERS */}
               {activeLetterTab === 'vouchers' && (
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {[
-                    { title: "Unlimited Bear Hugs 🫂", desc: "Redeemable anytime Ritu feels tired or sad. Never expires!" },
-                    { title: "Sweet Dessert & Snack Date 🍦", desc: "Jojo buys your favorite cravings without questions." },
-                    { title: "10,000 Forehead Kisses 💋", desc: "Valid for whenever you need instant comfort." },
-                    { title: "Late Night Movie & Cuddle 🎬", desc: "You pick whatever movie, Jojo brings blankets & hugs." },
-                    { title: "Win Any Argument Pass 👑", desc: "You are automatically right because you are the princess!" },
-                    { title: "Listen & Vent Session ☕", desc: "Jojo listens attentively and rubs your back." },
+                    { title: 'Unlimited Bear Hugs 🫂', desc: 'Redeemable anytime Ritu feels tired or sad. Never expires!' },
+                    { title: 'Sweet Dessert & Snack Date 🍦', desc: 'Jojo buys your favorite cravings without questions.' },
+                    { title: '10,000 Forehead Kisses 💋', desc: 'Valid for whenever you need instant comfort.' },
+                    { title: 'Late Night Movie & Cuddle 🎬', desc: 'You pick whatever movie, Jojo brings blankets & hugs.' },
+                    { title: 'Win Any Argument Pass 👑', desc: 'You are automatically right because you are the princess!' },
+                    { title: 'Listen & Vent Session ☕', desc: 'Jojo listens attentively and rubs your back.' },
                   ].map((v, idx) => (
                     <div
                       key={idx}
@@ -467,20 +490,35 @@ export const GiftBoxPage: React.FC<GiftBoxPageProps> = ({
                         <span>OFFICIAL COUPON</span>
                         <span>🎟️</span>
                       </div>
-                      <h4 className="font-extrabold text-sm text-[#4a352c]">{v.title}</h4>
+                      <h4 className="font-extrabold text-sm text-[#4a352c]">
+                        {v.title}
+                      </h4>
                       <p className="text-xs text-[#8a685e] mt-1">{v.desc}</p>
                     </div>
                   ))}
                 </div>
               )}
 
-              {/* TAB 4: UNWRAP GIFTS */}
               {activeLetterTab === 'gifts' && (
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                   {[
-                    { id: 'g1', box: '🎁 Mint Green Gift', inside: '🧸 Fluffy Teddy Bear with Jojo\'s scent and a recorded "I love you Ritu!" voice note' },
-                    { id: 'g2', box: '🎁 Lavender Gift', inside: '🍫 Box of sweet chocolates and heart shaped candies' },
-                    { id: 'g3', box: '🎁 Peach Gift', inside: '✨ Promise ring necklace to keep close to your heart forever' },
+                    {
+                      id: 'g1',
+                      box: '🎁 Mint Green Gift',
+                      inside:
+                        '🧸 Fluffy Teddy Bear with Jojo\'s scent and a recorded "I love you Ritu!" voice note',
+                    },
+                    {
+                      id: 'g2',
+                      box: '🎁 Lavender Gift',
+                      inside: '🍫 Box of sweet chocolates and heart shaped candies',
+                    },
+                    {
+                      id: 'g3',
+                      box: '🎁 Peach Gift',
+                      inside:
+                        '✨ Promise ring necklace to keep close to your heart forever',
+                    },
                   ].map((item) => (
                     <div
                       key={item.id}
@@ -489,8 +527,12 @@ export const GiftBoxPage: React.FC<GiftBoxPageProps> = ({
                     >
                       {!unwrappedGifts[item.id] ? (
                         <div className="py-4">
-                          <span className="text-4xl animate-bounce duration-700">🎁</span>
-                          <p className="text-xs font-black text-[#593b32] mt-2">{item.box}</p>
+                          <span className="text-4xl animate-bounce duration-700">
+                            🎁
+                          </span>
+                          <p className="text-xs font-black text-[#593b32] mt-2">
+                            {item.box}
+                          </p>
                           <span className="text-[10px] text-pink-600 font-extrabold underline mt-1 inline-block">
                             Tap to unwrap!
                           </span>
@@ -498,8 +540,12 @@ export const GiftBoxPage: React.FC<GiftBoxPageProps> = ({
                       ) : (
                         <div className="py-2 animate-in zoom-in-95 duration-200">
                           <span className="text-3xl">✨🎉</span>
-                          <p className="text-xs font-black text-pink-600 mt-2">Unwrapped!</p>
-                          <p className="text-xs font-bold text-[#593b32] mt-1">{item.inside}</p>
+                          <p className="text-xs font-black text-pink-600 mt-2">
+                            Unwrapped!
+                          </p>
+                          <p className="text-xs font-bold text-[#593b32] mt-1">
+                            {item.inside}
+                          </p>
                         </div>
                       )}
                     </div>
@@ -511,7 +557,7 @@ export const GiftBoxPage: React.FC<GiftBoxPageProps> = ({
             {/* Modal Footer */}
             <div className="p-3.5 bg-stone-50 border-t border-pink-100 flex flex-wrap items-center justify-between gap-2">
               <span className="text-xs text-stone-500 font-semibold">
-                Ritu ❤️ & Jojo boy
+                Ritu ❤️ &amp; Jojo boy
               </span>
 
               <div className="flex items-center gap-2">
